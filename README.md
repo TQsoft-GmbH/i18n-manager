@@ -22,7 +22,7 @@ Any type of contributions are welcome.
 ## This Fork
 
 ### Added features:
-- Proper array handling
+- Support arrays in locale files
 
 ## Current plugins and their supported extensions
 
