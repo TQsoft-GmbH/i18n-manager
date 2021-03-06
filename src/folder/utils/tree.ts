@@ -66,7 +66,11 @@ const createParsedFileTree = (
   level: number = 0,
 ) => {
   const folderData = items.map((it) => it.data);
-  const objectTree = deepmerge.all(folderData);
+  const objectTree = deepmerge.all(folderData, {
+    arrayMerge(target: any[], source: any[], options?: deepmerge.Options): any[] {
+      return [...target, source];
+    },
+  });
 
   createTreeFromObject(tree, objectTree, parent, parentPath, level);
 };
@@ -78,14 +82,18 @@ const createTreeFromObject = (
   parentPath: any[] = [],
   level: number = 0,
 ) => {
-  const keys = Object.keys(objectTree);
-  const length = keys.length;
+  const isArray = Array.isArray(objectTree) && Array.isArray(objectTree[0]);
+  const keys = isArray ? null : Object.keys(objectTree);
+  const length = isArray
+    ? Math.max(...objectTree.map((entry: any[]) => entry.length))
+    : keys!.length;
 
   for (let i = 0; i < length; ++i) {
-    const key = keys[i];
+    const key = isArray ? i.toString() : keys![i];
 
     const path = parentPath.concat(key);
     const isItem =
+      isArray ||
       typeof objectTree[key] === 'string' ||
       objectTree[key] === null ||
       objectTree[key] === undefined;
