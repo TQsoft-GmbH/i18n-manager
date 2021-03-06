@@ -19,6 +19,11 @@ Any type of contributions are welcome.
 * File changes detection
 * It's free! 🙂
 
+## This Fork
+
+### Added features:
+- Proper array handling
+
 ## Current plugins and their supported extensions
 
 * json - [.json, .arb (Flutter Internationalization)]
